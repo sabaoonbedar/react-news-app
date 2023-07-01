@@ -1,70 +1,116 @@
-# Getting Started with Create React App
+## Introduction:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This application is a news aggregator, where backend is developed using Laravel and frontend is developed with React Js. 
+The RDBMS is MySQL (But can be exchanged with PostgreSQL too, if required). 
 
-## Available Scripts
+### Features:
 
-In the project directory, you can run:
+- The Application is aggregating news from multiple APIs i.e. NewsAPI and TheGuardian. 
+- Each API has some request limits that we have to adhere to.
+- All news aggregated from multiple APIS are shown to the viewers in a single screen (according to the number of news feed limit of api) with search option.
+- Preferences are used to allow the user to adjust her/his feed by Authors, Categories and sources.
+- select, search, and date inputs are used to allow the user to search by Author, Category and source.
+- Those APIs, which dont provide images or corressponding information like Author etc have been replaced by general tags to keep the frontend design compact.
+- Middlewares in Laravel are used for security.
+- At most, reusable components are used in React Js for reusability and compact designs. 
+- Redux is used for state management.
+- I created two separate dockerfiles and two separate docker-compose files both for frontend and backend as per the requirement. But from my perspective, this should not be the ideal case. We should have two separate dockerfiles but not two seperate docker-compose files. A single docker-compose file should handle the running of both of the frontend and backend. 
+- The virtual host configuration is also provided in the myapp.conf. Which defines a local development environment. Requests to localhost on port 80 will be served from the /var/www/html/public directory.
 
-### `npm start`
+### Filters 
+- The filters on the left side are available and if you select any filter for e.g. 
+  - select a filter by category i.e. Football and then click on Apply Filter button and on the right side you will see all the news related to that category, if available. 
+  - You can provide multiple filters at a time. 
+  - There might be data available or not available based on certain categories and sources. So if data is available you will see it otherwise, you will see the default news. You can also see the default news by clicking on the Reset Filter to wash out any filters already selected. 
+  - If there is no data in the filter, the only thing that is missing is an alert box shown to the user that NO data is available in this filter. Due to time limitation, I skipped development of the alert box.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Preferences
+- For preferences, go to settings (User information with person icon).
+- In settings, there are three boxes (authors, sources,catagories) with add buttons to add the preferences and for delete trash icon is available.
 
-### `npm test`
+### Exceptions
+- As I already mentioned that there are request rate limits for each api as a free account. So here are the list of API endpoints that have request rate limitations and where I am using them.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- News API: 
+  - E.g. Everything: https://newsapi.org/docs/endpoints/everything
+  - This is used in the front page to aggregate all the news from all categories, sources and authors. 
+  - This has a request limit of 1000 per day.
+- for api keys check local.env (front-end) where you can change the api keys for NewsAPI and The Guardien API.
 
-### `npm run build`
+### APIs used
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **[NewsAPI](https://newsapi.org/)**
+- **[Guardian](https://open-platform.theguardian.com/documentation/)**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+##### Note: I wasnt able to find a third new aggregator API from your given sources that was as good as newsAPI and the Guardian. I worked on NYT (New York Times API) but it was having issue in their site to authorise the API, I hope they might fix it.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Unit Tests
+- I didn't write unit tests for this project due to time limitation. 
+- But unit tests are really essential both for front-end and back-end to test different features of the project. 
 
-### `npm run eject`
+## Techstack
+- Backend : Laravel, MySQL
+- Frontend : React Js
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Run Backend
+- First make sure that you are in the ```backend-laravel-api``` folder.
+- To run the backend, you have to type the following command:
+```
+docker-compose up --build
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Migrations
+- In order to have the application working, you first need to run the migration after building the Backend. 
+- Type the following command:
+```
+docker ps
+```
+- grab the container id of the ```backend-laravel-api_app```
+- and then type the following command in terminal:
+```
+docker exec -it <container_id_of_backend-laravel-api_app> sh
+```
+- After entering above command, you will enter into the shell of the docker container. then type the following command:
+- For authentication, I used passport. So before running migration, please run the following command:
+```
+php artisan passport:install
+```
+```
+php artisan migrate
+```
+- if you want to also create a default user or prepopulate user table, you can also then run the seeds:
+```
+php artisan db:seed       (optional)
+```
+- After runnig the above command you can use ``Username: sabaoon`` and ``Password:123123``
+- That is it. You will now have ready tables and then you can run the docker commands to start the frontend and use the application straight away. 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## Run Frontend
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- To run the frontend, you have to type the following command, but before running the command make sure that you have Docker Desktop installed on your local computer. 
+- First make sure that you are in the ```react-news-app``` folder.
+```
+docker-compose up --build
+```
+- After successfully building the frontend, Go to a browser of your choice, I recommend either Google or Firefox and type the following:
+```
+http://localhost:3000/
+```
+- Create your own username and password by clicking on Registration Button. 
+- Then login with the created username and password. 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Status Check
+- To make sure that everything works, you should check that below three container services must run wit the following command of docker:
 
-### Code Splitting
+- I would recommend to use a powerful specs' laptop to run docker as Docker is heavier and will take more time with weaker specs' laptop.
+```
+docker ps
+```
+- After typing above command, you will see a list of docker container services with container id and image name i.e.:
+- Image: backend-laravel-api_app
+- Image: mysql:5.7.22
+- Image: react-news-app_client
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

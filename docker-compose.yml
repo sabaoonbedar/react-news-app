@@ -1,0 +1,22 @@
+version: '3'
+services:
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    environment:
+      - CI=true
+    command: npm start --no-lint
+
+volumes:
+  node_modules:
+
+networks:
+  app-network:
+    external:
+      name: app-network

@@ -114,3 +114,18 @@ docker ps
 - Image: mysql:5.7.22
 - Image: react-news-app_client
 
+  
+- Guest Screen
+![guest screen](https://github.com/sabaoonbedar/react-news-app/assets/65660680/5c8d98cb-e116-4d67-bcb5-8bf2c3b79a88)
+- Login Screen
+![Login Screen](https://github.com/sabaoonbedar/react-news-app/assets/65660680/ca42bb8b-48de-4119-a8c3-dbf6de9b534c)
+- Sign Up Screen
+![Home Screen](https://github.com/sabaoonbedar/react-news-app/assets/65660680/0705ca93-7b98-4695-b64d-4bff5376844f)
+- Home Screen
+![Login Screen](https://github.com/sabaoonbedar/react-news-app/assets/65660680/2e3e1c5f-6039-44e1-b985-3b7681cb783d)
+- Filter
+![Login Screen](https://github.com/sabaoonbedar/react-news-app/assets/65660680/2fce8df7-c7f0-4ee9-a8b2-0612da02e7c2)
+- Settings Screen
+![Login Screen](https://github.com/sabaoonbedar/react-news-app/assets/65660680/7a9fc3a3-2e9d-4c75-bf29-78da1ef23084)
+
+

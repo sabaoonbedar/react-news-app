@@ -14,6 +14,7 @@ The RDBMS is MySQL (But can be exchanged with PostgreSQL too, if required).
 - Middlewares in Laravel are used for security.
 - At most, reusable components are used in React Js for reusability and compact designs. 
 - Redux is used for state management.
+- Pagintation is used to enhance performance, user experience and lower the load on browser memory. I applied pagination on the search results while another approach is to use the API's own pagination but due to limits in the API'S I used the first approach as discussed.
 - I created two separate dockerfiles and two separate docker-compose files both for frontend and backend as per the requirement. But from my perspective, this should not be the ideal case. We should have two separate dockerfiles but not two seperate docker-compose files. A single docker-compose file should handle the running of both of the frontend and backend. 
 - The virtual host configuration is also provided in the myapp.conf. Which defines a local development environment. Requests to localhost on port 80 will be served from the /var/www/html/public directory.
 
